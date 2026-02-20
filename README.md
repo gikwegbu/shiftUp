@@ -344,7 +344,7 @@ flutter pub deps --style=list
 
 **George Ikwegbu**  
 Senior Flutter / Mobile Engineer  
-🌐 [georgeikwegbu.dev](https://georgeikwegbu.dev) · 💼 [LinkedIn](https://linkedin.com/in/georgeikwegbu) · 🐙 [GitHub](https://github.com/georgeikwegbu)
+🌐 [gikwegbu.netlify.app/](https://gikwegbu.netlify.app/) · 💼 [LinkedIn](https://www.linkedin.com/in/GIkwegbu/) · 🐙 [GitHub](https://github.com/gikwegbu)
 
 ---
 
