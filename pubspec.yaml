@@ -68,9 +68,46 @@ dev_dependencies:
   freezed: ^2.5.5
   json_serializable: ^6.8.0
 
+  # App Icon & Splash Screen
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.0
+
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
     - assets/icons/
     - assets/animations/
+
+# ─── Launcher Icons ─────────────────────────────────────────────────────────
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  web:
+    generate: false
+  windows:
+    generate: false
+  macos:
+    generate: false
+  adaptive_icon_background: "#121212"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
+
+# ─── Native Splash Screen ────────────────────────────────────────────────────
+flutter_native_splash:
+  color: "#121212"
+  image: assets/images/splash_logo.png
+  image_dark: assets/images/splash_logo.png
+  color_dark: "#121212"
+  android_12:
+    color: "#121212"
+    image: assets/images/splash_logo.png
+    icon_background_color: "#121212"
+    color_dark: "#121212"
+    image_dark: assets/images/splash_logo.png
+    icon_background_color_dark: "#121212"
+  fullscreen: false
+  android: true
+  ios: true
+  web: false

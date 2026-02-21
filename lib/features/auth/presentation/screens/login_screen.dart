@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_images.dart';
 import '../../../../core/constants/app_sizes.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -32,9 +33,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final success = await ref
-        .read(authViewModelProvider.notifier)
-        .signIn(
+    final success = await ref.read(authViewModelProvider.notifier).signIn(
           email: _emailController.text,
           password: _passwordController.text,
         );
@@ -136,27 +135,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         const SizedBox(height: 40),
                         Container(
-                          width: 72,
-                          height: 72,
+                          width: 88,
+                          height: 88,
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(24),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(alpha: 0.3),
-                                blurRadius: 30,
-                                spreadRadius: 5,
+                                color:
+                                    AppColors.primary.withValues(alpha: 0.35),
+                                blurRadius: 32,
+                                spreadRadius: 6,
                               ),
                             ],
                           ),
-                          child: const Center(
-                            child: Text(
-                              'S↑',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white,
-                              ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(24),
+                            child: Image.asset(
+                              AppImages.appIcon,
+                              width: 88,
+                              height: 88,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -177,13 +175,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Welcome back
                   const Text(
-                        'Welcome back 👋',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                      )
+                    'Welcome back 👋',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  )
                       .animate()
                       .fade(duration: 400.ms, delay: 100.ms)
                       .slideX(begin: -0.1),
@@ -201,22 +199,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Email field
                   AppTextField(
-                        controller: _emailController,
-                        label: AppStrings.email,
-                        keyboardType: TextInputType.emailAddress,
-                        prefixIcon: Icons.email_outlined,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppStrings.requiredField;
-                          }
-                          if (!RegExp(
-                            r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                          ).hasMatch(value)) {
-                            return AppStrings.invalidEmail;
-                          }
-                          return null;
-                        },
-                      )
+                    controller: _emailController,
+                    label: AppStrings.email,
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icons.email_outlined,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.requiredField;
+                      }
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
+                        return AppStrings.invalidEmail;
+                      }
+                      return null;
+                    },
+                  )
                       .animate()
                       .fade(duration: 400.ms, delay: 200.ms)
                       .slideY(begin: 0.1),
@@ -225,23 +223,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Password field
                   AppTextField(
-                        controller: _passwordController,
-                        label: AppStrings.password,
-                        obscureText: _obscurePassword,
-                        prefixIcon: Icons.lock_outline,
-                        suffixIcon: _obscurePassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        onSuffixTap: () => setState(
-                          () => _obscurePassword = !_obscurePassword,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppStrings.requiredField;
-                          }
-                          return null;
-                        },
-                      )
+                    controller: _passwordController,
+                    label: AppStrings.password,
+                    obscureText: _obscurePassword,
+                    prefixIcon: Icons.lock_outline,
+                    suffixIcon: _obscurePassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    onSuffixTap: () => setState(
+                      () => _obscurePassword = !_obscurePassword,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.requiredField;
+                      }
+                      return null;
+                    },
+                  )
                       .animate()
                       .fade(duration: 400.ms, delay: 250.ms)
                       .slideY(begin: 0.1),
@@ -259,10 +257,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                   // Login button
                   AppButton(
-                        label: AppStrings.login,
-                        onPressed: authState.isLoading ? null : _handleLogin,
-                        isLoading: authState.isLoading,
-                      )
+                    label: AppStrings.login,
+                    onPressed: authState.isLoading ? null : _handleLogin,
+                    isLoading: authState.isLoading,
+                  )
                       .animate()
                       .fade(duration: 400.ms, delay: 350.ms)
                       .slideY(begin: 0.1),

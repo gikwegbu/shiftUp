@@ -134,9 +134,9 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   ).animate().fade(duration: 400.ms, delay: 250.ms)
                 else
                   _buildEmptyShifts().animate().fade(
-                    duration: 400.ms,
-                    delay: 250.ms,
-                  ),
+                        duration: 400.ms,
+                        delay: 250.ms,
+                      ),
 
                 const SizedBox(height: 24),
 
@@ -364,8 +364,8 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   color: isOnShift
                       ? AppColors.success.withValues(alpha: 0.15)
                       : isUpcoming
-                      ? AppColors.info.withValues(alpha: 0.15)
-                      : AppColors.surfaceVariant,
+                          ? AppColors.info.withValues(alpha: 0.15)
+                          : AppColors.surfaceVariant,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -376,8 +376,8 @@ class ManagerDashboardScreen extends ConsumerWidget {
                     color: isOnShift
                         ? AppColors.success
                         : isUpcoming
-                        ? AppColors.info
-                        : AppColors.textHint,
+                            ? AppColors.info
+                            : AppColors.textHint,
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_images.dart';
 import '../../../../core/router/app_router.dart';
 import '../viewmodels/auth_view_model.dart';
 
@@ -66,30 +67,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
                 // Logo
                 Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(28),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.4),
-                            blurRadius: 40,
-                            spreadRadius: 10,
-                          ),
-                        ],
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(32),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.4),
+                        blurRadius: 48,
+                        spreadRadius: 12,
                       ),
-                      child: const Center(
-                        child: Text(
-                          'S↑',
-                          style: TextStyle(
-                            fontSize: 42,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(32),
+                    child: Image.asset(
+                      AppImages.appIcon,
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
                     .animate()
                     .scale(duration: 600.ms, curve: Curves.elasticOut)
                     .fade(duration: 400.ms),
@@ -98,14 +97,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
                 // App name
                 const Text(
-                      'ShiftUp',
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimary,
-                        letterSpacing: -1,
-                      ),
-                    )
+                  'ShiftUp',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.textPrimary,
+                    letterSpacing: -1,
+                  ),
+                )
                     .animate()
                     .slideY(
                       begin: 0.3,
@@ -118,13 +117,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 const SizedBox(height: 8),
 
                 Text(
-                      'Shift management, simplified.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    )
+                  'Shift management, simplified.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
                     .animate()
                     .slideY(
                       begin: 0.3,

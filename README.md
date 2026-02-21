@@ -231,7 +231,7 @@ flutterfire configure
 # - lib/firebase_options.dart  (optional, for multi-platform)
 ```
 
-> ⚠️ **Never commit** `google-services.json` or `GoogleService-Info.plist` to version control. They are listed in `.gitignore`.
+> ⚠️ **Never commit** `google-services.json`, `GoogleService-Info.plist` or `firebase_options.dart` to version control. They are listed in `.gitignore`.
 
 ### Required Firestore Collections
 
