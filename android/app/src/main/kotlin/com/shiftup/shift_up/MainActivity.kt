@@ -1,4 +1,4 @@
-package com.shiftup.shift_up
+package com.gikwegbu.shiftUp
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -4,17 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/services/hive_service.dart';
 import 'core/theme/app_theme.dart';
+import 'firebase_options.dart'; // ✅ add this import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Hive
-  await HiveService.init();
+  // Firebase must initialise first
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // ✅ required
+  );
 
-  // Initialize Firebase
-  // Note: Requires google-services.json (Android) / GoogleService-Info.plist (iOS)
-  // Run: flutterfire configure
-  await Firebase.initializeApp();
+  // Hive after Firebase
+  await HiveService.init();
 
   runApp(const ProviderScope(child: ShiftUpApp()));
 }
