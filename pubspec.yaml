@@ -97,15 +97,15 @@ flutter_launcher_icons:
 # ─── Native Splash Screen ────────────────────────────────────────────────────
 flutter_native_splash:
   color: "#121212"
-  image: assets/images/splash_logo.png
-  image_dark: assets/images/splash_logo.png
+  image: assets/images/app_icon.png
+  image_dark: assets/images/app_icon.png
   color_dark: "#121212"
   android_12:
     color: "#121212"
-    image: assets/images/splash_logo.png
+    image: assets/images/app_icon.png
     icon_background_color: "#121212"
     color_dark: "#121212"
-    image_dark: assets/images/splash_logo.png
+    image_dark: assets/images/app_icon.png
     icon_background_color_dark: "#121212"
   fullscreen: false
   android: true

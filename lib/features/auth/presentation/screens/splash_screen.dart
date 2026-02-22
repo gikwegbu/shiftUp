@@ -116,7 +116,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
                 const SizedBox(height: 8),
 
-                Text(
+                const Text(
                   'Shift management, simplified.',
                   style: TextStyle(
                     fontSize: 16,

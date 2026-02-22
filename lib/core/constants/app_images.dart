@@ -15,9 +15,6 @@ abstract final class AppImages {
   /// Main launcher / app icon (1024 × 1024 PNG).
   static const String appIcon = '$_images/app_icon.png';
 
-  /// Dedicated splash-screen logo (transparent-bg PNG).
-  static const String splashLogo = '$_images/splash_logo.png';
-
   // ── Placeholders — add new assets here as the project grows ──────────────
   //
   // static const String onboardingShift   = '$_images/onboarding_shift.png';
