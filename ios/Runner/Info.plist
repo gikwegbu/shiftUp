@@ -38,12 +38,15 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
+	<!-- Camera -->
+	<key>NSCameraUsageDescription</key>
+	<string>ShiftUp uses your camera to scan documents and QR codes.</string>
+
+	<!-- Location -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>ShiftUp uses your location to verify you are at your shift venue when clocking in.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>ShiftUp uses your location to verify you are at your shift venue when clocking in.</string>
 </dict>
 </plist>
