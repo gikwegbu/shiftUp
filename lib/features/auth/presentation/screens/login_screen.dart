@@ -32,11 +32,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
-
+    print('Attempting login with email: ${_emailController.text}');
     final success = await ref.read(authViewModelProvider.notifier).signIn(
           email: _emailController.text,
           password: _passwordController.text,
         );
+
+    print(
+        'Login result: $success, User: ${ref.read(authViewModelProvider).user}, Error: ${ref.read(authViewModelProvider).errorMessage}');
 
     if (!mounted) return;
 

@@ -13,7 +13,7 @@ class ShiftRepository {
   ShiftRepository({required FirebaseFirestore firestore})
       : _firestore = firestore;
 
-  // Get shifts for a venue (manager view)
+  // Streams don't use try/catch — handle errors on the consumer side via .handleError()
   Stream<List<ShiftModel>> getVenueShifts(String venueId) {
     return _firestore
         .collection('shifts')
@@ -27,8 +27,9 @@ class ShiftRepository {
         );
   }
 
-  // Get shifts for a specific staff member
   Stream<List<ShiftModel>> getStaffShifts(String staffId) {
+    print('Fetching shifts for staffId: $staffId');
+    /*
     return _firestore
         .collection('shifts')
         .where('staffId', isEqualTo: staffId)
@@ -39,84 +40,125 @@ class ShiftRepository {
               .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
               .toList(),
         );
-  }
-
-  // Get upcoming shifts for staff
-  Future<List<ShiftModel>> getUpcomingStaffShifts(String staffId) async {
-    final now = DateTime.now();
-    final snap = await _firestore
+        */
+    final doc = _firestore
         .collection('shifts')
         .where('staffId', isEqualTo: staffId)
-        .where('startTime', isGreaterThanOrEqualTo: now.toIso8601String())
-        .orderBy('startTime')
-        .limit(10)
-        .get();
-
-    return snap.docs
-        .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
-        .toList();
+        .orderBy('startTime', descending: false)
+        .snapshots();
+    print(doc);
+    doc.handleError((error) {
+      print('Error fetching staff shifts: $error');
+    });
+    final _ = doc.map(
+      (snap) => snap.docs
+          .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
+          .toList(),
+    );
+    print(_);
+    return _;
   }
 
-  // Get today's shifts for a venue
+  Future<List<ShiftModel>> getUpcomingStaffShifts(String staffId) async {
+    try {
+      final now = DateTime.now();
+      final snap = await _firestore
+          .collection('shifts')
+          .where('staffId', isEqualTo: staffId)
+          .where('startTime', isGreaterThanOrEqualTo: now.toIso8601String())
+          .orderBy('startTime')
+          .limit(10)
+          .get();
+
+      return snap.docs
+          .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to fetch upcoming shifts: $e');
+    }
+  }
+
   Future<List<ShiftModel>> getTodayVenueShifts(String venueId) async {
-    final now = DateTime.now();
-    final startOfDay = DateTime(now.year, now.month, now.day);
-    final endOfDay = startOfDay.add(const Duration(days: 1));
+    try {
+      final now = DateTime.now();
+      final startOfDay = DateTime(now.year, now.month, now.day);
+      final endOfDay = startOfDay.add(const Duration(days: 1));
 
-    final snap = await _firestore
-        .collection('shifts')
-        .where('venueId', isEqualTo: venueId)
-        .where(
-          'startTime',
-          isGreaterThanOrEqualTo: startOfDay.toIso8601String(),
-        )
-        .where('startTime', isLessThan: endOfDay.toIso8601String())
-        .orderBy('startTime')
-        .get();
+      final snap = await _firestore
+          .collection('shifts')
+          .where('venueId', isEqualTo: venueId)
+          .where(
+            'startTime',
+            isGreaterThanOrEqualTo: startOfDay.toIso8601String(),
+          )
+          .where('startTime', isLessThan: endOfDay.toIso8601String())
+          .orderBy('startTime')
+          .get();
 
-    return snap.docs
-        .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
-        .toList();
+      return snap.docs
+          .map((doc) => ShiftModel.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to fetch today\'s shifts: $e');
+    }
   }
 
-  // Create shift
   Future<ShiftModel> createShift(ShiftModel shift) async {
-    final doc = await _firestore.collection('shifts').add(shift.toMap());
-    return ShiftModel.fromMap({...shift.toMap(), 'id': doc.id}, doc.id);
+    try {
+      final doc = await _firestore.collection('shifts').add(shift.toMap());
+      return ShiftModel.fromMap({...shift.toMap(), 'id': doc.id}, doc.id);
+    } catch (e) {
+      throw Exception('Failed to create shift: $e');
+    }
   }
 
-  // Update shift
   Future<void> updateShift(ShiftModel shift) async {
-    await _firestore.collection('shifts').doc(shift.id).update(shift.toMap());
-    HiveService.shiftBox.put(shift.id, shift);
+    try {
+      await _firestore.collection('shifts').doc(shift.id).update(shift.toMap());
+      HiveService.shiftBox.put(shift.id, shift);
+    } catch (e) {
+      throw Exception('Failed to update shift: $e');
+    }
   }
 
-  // Delete shift
   Future<void> deleteShift(String shiftId) async {
-    await _firestore.collection('shifts').doc(shiftId).delete();
-    HiveService.shiftBox.delete(shiftId);
+    try {
+      await _firestore.collection('shifts').doc(shiftId).delete();
+      HiveService.shiftBox.delete(shiftId);
+    } catch (e) {
+      throw Exception('Failed to delete shift: $e');
+    }
   }
 
-  // Clock in
   Future<void> clockIn(String shiftId) async {
-    await _firestore.collection('shifts').doc(shiftId).update({
-      'clockInTime': DateTime.now().toIso8601String(),
-      'status': 'confirmed',
-    });
+    try {
+      await _firestore.collection('shifts').doc(shiftId).update({
+        'clockInTime': DateTime.now().toIso8601String(),
+        'status': 'confirmed',
+      });
+    } catch (e) {
+      throw Exception('Failed to clock in: $e');
+    }
   }
 
-  // Clock out
   Future<void> clockOut(String shiftId) async {
-    await _firestore.collection('shifts').doc(shiftId).update({
-      'clockOutTime': DateTime.now().toIso8601String(),
-      'status': 'completed',
-    });
+    try {
+      await _firestore.collection('shifts').doc(shiftId).update({
+        'clockOutTime': DateTime.now().toIso8601String(),
+        'status': 'completed',
+      });
+    } catch (e) {
+      throw Exception('Failed to clock out: $e');
+    }
   }
 
-  // Request shift swap
   Future<void> requestSwap(String shiftId) async {
-    await _firestore.collection('shifts').doc(shiftId).update({
-      'isSwapRequested': true,
-    });
+    try {
+      await _firestore.collection('shifts').doc(shiftId).update({
+        'isSwapRequested': true,
+      });
+    } catch (e) {
+      throw Exception('Failed to request shift swap: $e');
+    }
   }
 }
