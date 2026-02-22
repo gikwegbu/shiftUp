@@ -48,5 +48,4 @@ post_install do |installer|
       end
     end
   end
-
-  # Remove empty dSYM b
+end
