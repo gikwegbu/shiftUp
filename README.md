@@ -1,7 +1,7 @@
 # ShiftUp
 
 <div align="center">
-  <img src="assets/images/logo.png" alt="ShiftUp Logo" width="120" />
+  <img src="assets/images/app_icon.png" alt="ShiftUp Logo" width="120" />
 
   <h3>UK Hospitality Shift Management & Scheduling App</h3>
 
