@@ -86,17 +86,21 @@ class StaffDashboardScreen extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: AppColors.staff,
-                  child: Text(
-                    (user?.fullName.isNotEmpty == true)
-                        ? user!.fullName[0].toUpperCase()
-                        : 'S',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
+                child: InkWell(
+                  onTap: () => context.push(AppRoutes.profile),
+                  borderRadius: BorderRadius.circular(18),
+                  child: CircleAvatar(
+                    radius: 18,
+                    backgroundColor: AppColors.staff,
+                    child: Text(
+                      (user?.fullName.isNotEmpty == true)
+                          ? user!.fullName.substring(0, 1).toUpperCase()
+                          : 'S',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

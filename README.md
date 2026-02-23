@@ -102,6 +102,7 @@ Firebase  Hive
 | State Management | flutter_riverpod | ^2.5 |
 | Navigation | go_router | ^13 |
 | Backend | Firebase Auth + Firestore + Storage | Latest |
+| Crash Reporting | firebase_crashlytics | ^4.0 |
 | Push Notifications | firebase_messaging | ^15 |
 | Local Storage | hive_flutter | ^1.1 |
 | Charts | fl_chart | ^0.68 |

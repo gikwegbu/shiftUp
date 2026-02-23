@@ -112,6 +112,33 @@ class AuthViewModel extends StateNotifier<AuthState> {
     }
   }
 
+  Future<bool> updateProfile({
+    String? fullName,
+    String? phoneNumber,
+  }) async {
+    if (state.user == null) return false;
+
+    state = state.copyWith(status: AuthStatus.loading);
+    try {
+      final updatedUser = state.user!.copyWith(
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+      );
+
+      await _repository.updateUser(updatedUser);
+
+      state =
+          state.copyWith(status: AuthStatus.authenticated, user: updatedUser);
+      return true;
+    } catch (e) {
+      state = state.copyWith(
+        status: AuthStatus.error,
+        errorMessage: _parseError(e.toString()),
+      );
+      return false;
+    }
+  }
+
   Future<void> signOut() async {
     await _repository.signOut();
     state = const AuthState(status: AuthStatus.unauthenticated);

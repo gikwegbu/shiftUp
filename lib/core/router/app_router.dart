@@ -7,19 +7,27 @@ import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/manager/presentation/screens/manager_shell.dart';
 import '../../features/manager/presentation/screens/manager_dashboard_screen.dart';
 import '../../features/manager/presentation/screens/roster_screen.dart';
+import '../../features/manager/presentation/screens/staff_management_screen.dart';
+import '../../features/manager/presentation/screens/shift_swaps_screen.dart';
+import '../../features/manager/presentation/screens/reports_screen.dart';
 import '../../features/staff/presentation/screens/staff_shell.dart';
 import '../../features/staff/presentation/screens/staff_dashboard_screen.dart';
 import '../../features/staff/presentation/screens/my_shifts_screen.dart';
 import '../../features/staff/presentation/screens/clock_in_out_screen.dart';
 import '../../features/staff/presentation/screens/availability_screen.dart';
 import '../../features/staff/presentation/screens/pay_summary_screen.dart';
+import '../../features/staff/presentation/screens/all_payslips_screen.dart';
 import '../../features/shared/presentation/screens/notifications_screen.dart';
+import '../../features/shared/presentation/screens/profile_screen.dart';
+import '../../features/shared/presentation/screens/edit_profile_screen.dart';
 
 // Route names
 abstract class AppRoutes {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
+  static const String profile = '/profile';
+  static const String editProfile = '/profile/edit';
 
   // Manager routes
   static const String managerDashboard = '/manager/dashboard';
@@ -34,6 +42,7 @@ abstract class AppRoutes {
   static const String clockInOut = '/staff/clock';
   static const String availability = '/staff/availability';
   static const String paySummary = '/staff/pay';
+  static const String allPayslips = '/staff/pay/all';
   static const String notifications = '/staff/notifications';
 }
 
@@ -59,6 +68,22 @@ final routerProvider = Provider<GoRouter>((ref) {
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
           child: const RegisterScreen(),
+          transitionsBuilder: _slideTransition,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.profile,
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const ProfileScreen(),
+          transitionsBuilder: _slideTransition,
+        ),
+      ),
+      GoRoute(
+        path: AppRoutes.editProfile,
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const EditProfileScreen(),
           transitionsBuilder: _slideTransition,
         ),
       ),
@@ -88,7 +113,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.staffManagement,
-                builder: (context, state) => const _StaffManagementScreen(),
+                builder: (context, state) => const StaffManagementScreen(),
               ),
             ],
           ),
@@ -96,7 +121,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.shiftSwaps,
-                builder: (context, state) => const _ShiftSwapsScreen(),
+                builder: (context, state) => const ShiftSwapsScreen(),
               ),
             ],
           ),
@@ -104,7 +129,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.reports,
-                builder: (context, state) => const _ReportsScreen(),
+                builder: (context, state) => const ReportsScreen(),
               ),
             ],
           ),
@@ -153,6 +178,12 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.paySummary,
                 builder: (context, state) => const PaySummaryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'all', // Inherits '/staff/pay' -> '/staff/pay/all'
+                    builder: (context, state) => const AllPayslipsScreen(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -191,33 +222,5 @@ Widget _slideTransition(
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
     child: child,
-  );
-}
-
-// Placeholder screens (to be built out in follow-up)
-class _StaffManagementScreen extends StatelessWidget {
-  const _StaffManagementScreen();
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Team')),
-    body: const Center(child: Text('Staff management coming soon')),
-  );
-}
-
-class _ShiftSwapsScreen extends StatelessWidget {
-  const _ShiftSwapsScreen();
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Shift Swaps')),
-    body: const Center(child: Text('Shift swaps coming soon')),
-  );
-}
-
-class _ReportsScreen extends StatelessWidget {
-  const _ReportsScreen();
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Reports')),
-    body: const Center(child: Text('Reports coming soon')),
   );
 }
